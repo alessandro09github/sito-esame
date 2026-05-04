@@ -1,0 +1,1425 @@
+# sito-esame
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyber Security nella Domotica</title>
+  <meta name="description" content="Sito scolastico sulla cyber security nella smart home: telecamere, Wi-Fi, IoT, password e protezione dei dati.">
+  
+  <!-- Open Graph per anteprime social -->
+  <meta property="og:title" content="Cyber Security nella Domotica">
+  <meta property="og:description" content="Progetto scolastico sulla sicurezza informatica nella smart home.">
+  <meta property="og:type" content="website">
+  
+  <!-- Preconnect per font di sistema più veloci -->
+  <link rel="preconnect" href="[fonts.googleapis.com](https://fonts.googleapis.com)">
+  
+  <style>
+    :root {
+      --bg: #05060a;
+      --bg-soft: #0b1020;
+      --card: rgba(255, 255, 255, 0.08);
+      --card-border: rgba(255, 255, 255, 0.18);
+      --text: #f5f7fb;
+      --muted: #a9b3c7;
+      --accent: #4da3ff;
+      --accent-2: #8b5cf6;
+      --danger: #ff4d6d;
+      --success: #35d399;
+      --radius: 28px;
+      --shadow: 0 25px 80px rgba(0, 0, 0, 0.45);
+      --max-width: 1180px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(77, 163, 255, 0.28), transparent 32%),
+        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.22), transparent 32%),
+        radial-gradient(circle at 50% 90%, rgba(53, 211, 153, 0.12), transparent 35%),
+        #05060a;
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.08;
+      z-index: -2;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='[w3.org](http://www.w3.org/2000/svg)'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    .nav {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(calc(100% - 32px), 1000px);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10, 15, 30, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 999px;
+      z-index: 100;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
+    }
+
+    .logo {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .logo-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 28px rgba(77, 163, 255, 0.55);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 9px 13px;
+      border-radius: 999px;
+      transition: 0.25s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .menu-btn {
+      display: none;
+      border: 0;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 9px 12px;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .section {
+      width: min(calc(100% - 36px), var(--max-width));
+      margin: 0 auto;
+      padding: 110px 0;
+    }
+
+    .hero {
+      min-height: 100vh;
+      width: min(calc(100% - 36px), 1250px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 40px;
+      align-items: center;
+      padding-top: 105px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: #dceaff;
+      background: rgba(77, 163, 255, 0.12);
+      border: 1px solid rgba(77, 163, 255, 0.28);
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      margin-bottom: 24px;
+    }
+
+    .pulse {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 rgba(53, 211, 153, 0.7);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(53, 211, 153, 0.6); }
+      70% { box-shadow: 0 0 0 12px rgba(53, 211, 153, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(53, 211, 153, 0); }
+    }
+
+    h1 {
+      font-size: clamp(3rem, 8vw, 7.5rem);
+      line-height: 0.92;
+      letter-spacing: -0.08em;
+      max-width: 760px;
+      margin-bottom: 26px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(100deg, #ffffff, #9ecfff 38%, #b7a1ff 74%, #ffffff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 660px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 1.8vw, 1.32rem);
+      margin-bottom: 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn {
+      border: 0;
+      outline: 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 20px;
+      min-height: 50px;
+      border-radius: 999px;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 750;
+      transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 16px 40px rgba(77, 163, 255, 0.28);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 55px rgba(77, 163, 255, 0.28);
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 590px;
+      display: grid;
+      place-items: center;
+    }
+
+    .smart-home {
+      position: relative;
+      width: min(470px, 92vw);
+      aspect-ratio: 1;
+      border-radius: 48px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.18), rgba(255,255,255,0.04)),
+        radial-gradient(circle at 50% 20%, rgba(77, 163, 255, 0.32), transparent 36%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      overflow: hidden;
+      transform-style: preserve-3d;
+      animation: float 5.5s ease-in-out infinite;
+      transition: transform 0.1s ease-out;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    .smart-home::before {
+      content: "";
+      position: absolute;
+      inset: 32px;
+      border-radius: 40px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .roof {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      left: 50%;
+      top: 74px;
+      transform: translateX(-50%) rotate(45deg);
+      border-left: 3px solid rgba(255,255,255,0.8);
+      border-top: 3px solid rgba(255,255,255,0.8);
+      filter: drop-shadow(0 0 18px rgba(77, 163, 255, 0.65));
+    }
+
+    .body-house {
+      position: absolute;
+      width: 260px;
+      height: 210px;
+      left: 50%;
+      top: 190px;
+      transform: translateX(-50%);
+      border: 3px solid rgba(255,255,255,0.75);
+      border-radius: 18px;
+      filter: drop-shadow(0 0 18px rgba(77, 163, 255, 0.65));
+    }
+
+    .door {
+      position: absolute;
+      width: 70px;
+      height: 118px;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      border: 3px solid rgba(77, 163, 255, 0.95);
+      border-bottom: 0;
+      border-radius: 18px 18px 0 0;
+      background: rgba(77, 163, 255, 0.08);
+    }
+
+    .device-dot {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 25px rgba(53, 211, 153, 0.9);
+      animation: dotPulse 2s ease-in-out infinite;
+    }
+
+    .device-dot:nth-child(2) { animation-delay: 0.3s; }
+    .device-dot:nth-child(3) { animation-delay: 0.6s; }
+
+    @keyframes dotPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.8; }
+    }
+
+    .dot-1 { top: 130px; left: 135px; }
+    .dot-2 { top: 270px; left: 90px; background: var(--accent); box-shadow: 0 0 25px rgba(77, 163, 255, 0.9); }
+    .dot-3 { top: 260px; right: 92px; background: var(--accent-2); box-shadow: 0 0 25px rgba(139, 92, 246, 0.9); }
+
+    .scan-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      top: 18%;
+      background: linear-gradient(90deg, transparent, rgba(53, 211, 153, 0.9), transparent);
+      box-shadow: 0 0 28px rgba(53, 211, 153, 0.9);
+      animation: scan 4s ease-in-out infinite;
+    }
+
+    @keyframes scan {
+      0%, 100% { top: 18%; opacity: 0.2; }
+      50% { top: 82%; opacity: 1; }
+    }
+
+    .floating-card {
+      position: absolute;
+      border-radius: 22px;
+      padding: 14px 16px;
+      background: rgba(12, 18, 35, 0.72);
+      border: 1px solid rgba(255,255,255,0.16);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+      color: var(--text);
+      animation: floatSmall 4s ease-in-out infinite;
+    }
+
+    .floating-card strong {
+      display: block;
+      font-size: 0.95rem;
+    }
+
+    .floating-card span {
+      color: var(--muted);
+      font-size: 0.83rem;
+    }
+
+    .card-a { top: 70px; right: 0; }
+    .card-b { bottom: 78px; left: 0; animation-delay: 1s; }
+    .card-c { bottom: 0; right: 50px; animation-delay: 1.6s; }
+
+    @keyframes floatSmall {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .section-title {
+      text-align: center;
+      max-width: 780px;
+      margin: 0 auto 55px;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.78rem;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(2.2rem, 5vw, 4.8rem);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      margin-bottom: 18px;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .glass-card {
+      position: relative;
+      padding: 28px;
+      min-height: 250px;
+      border-radius: var(--radius);
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.22);
+      overflow: hidden;
+      transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+    }
+
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(77, 163, 255, 0.28), transparent 34%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-9px);
+      border-color: rgba(77, 163, 255, 0.42);
+      background: rgba(255, 255, 255, 0.105);
+    }
+
+    .glass-card:hover::before {
+      opacity: 1;
+    }
+
+    .icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, rgba(77, 163, 255, 0.25), rgba(139, 92, 246, 0.18));
+      border: 1px solid rgba(255,255,255,0.15);
+      font-size: 1.8rem;
+    }
+
+    .glass-card h3 {
+      font-size: 1.35rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .glass-card p {
+      color: var(--muted);
+      position: relative;
+    }
+
+    .showcase {
+      position: relative;
+      min-height: 520px;
+      border-radius: 40px;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03)),
+        radial-gradient(circle at 20% 15%, rgba(77, 163, 255, 0.30), transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.26), transparent 30%),
+        rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 42px;
+    }
+
+    .showcase h3 {
+      font-size: clamp(2rem, 4vw, 4rem);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      margin-bottom: 18px;
+    }
+
+    .showcase p {
+      color: var(--muted);
+      max-width: 520px;
+      font-size: 1.05rem;
+    }
+
+    .device-panel {
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
+    .camera {
+      width: 270px;
+      height: 380px;
+      border-radius: 60px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.25), rgba(255,255,255,0.06));
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 30px 90px rgba(0,0,0,0.42);
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .camera::before {
+      content: "";
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 50%, #09111f 0 20%, #173258 21% 34%, #0a0d14 35% 55%, rgba(255,255,255,0.18) 56% 58%, #111827 59%);
+      box-shadow: 0 0 35px rgba(77,163,255,0.35), inset 0 0 25px rgba(77,163,255,0.22);
+    }
+
+    .camera::after {
+      content: "LIVE";
+      position: absolute;
+      top: 34px;
+      right: 34px;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 900;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(255, 77, 109, 0.82);
+      box-shadow: 0 0 20px rgba(255, 77, 109, 0.45);
+      animation: livePulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes livePulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .risk-list {
+      margin-top: 28px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .risk-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #dce5f5;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .risk-item:hover {
+      transform: translateX(8px);
+      background: rgba(255,255,255,0.1);
+    }
+
+    .risk-item span:first-child {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 77, 109, 0.16);
+      color: #ffb4c1;
+      flex: 0 0 auto;
+      font-weight: bold;
+    }
+
+    .steps {
+      counter-reset: step;
+      display: grid;
+      gap: 18px;
+    }
+
+    .step {
+      counter-increment: step;
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 18px;
+      align-items: start;
+      padding: 24px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.075);
+      border: 1px solid rgba(255,255,255,0.14);
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .step:hover {
+      transform: translateX(12px);
+      background: rgba(255,255,255,0.1);
+    }
+
+    .step::before {
+      content: counter(step);
+      width: 58px;
+      height: 58px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      font-size: 1.3rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 12px 35px rgba(77, 163, 255, 0.28);
+    }
+
+    .step h3 {
+      margin-bottom: 6px;
+      letter-spacing: -0.03em;
+    }
+
+    .step p {
+      color: var(--muted);
+    }
+
+    .password-demo {
+      padding: 34px;
+      border-radius: 34px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: var(--shadow);
+    }
+
+    .password-demo label {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .password-demo input {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(0,0,0,0.28);
+      color: var(--text);
+      padding: 16px 18px;
+      border-radius: 18px;
+      outline: none;
+      font-size: 1rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .password-demo input:focus {
+      border-color: rgba(77, 163, 255, 0.75);
+      box-shadow: 0 0 0 4px rgba(77, 163, 255, 0.16);
+    }
+
+    .meter {
+      margin: 18px 0 12px;
+      height: 12px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .meter-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: var(--danger);
+      transition: width 0.35s ease, background 0.35s ease;
+    }
+
+    .password-result {
+      color: var(--muted);
+      min-height: 26px;
+      transition: color 0.2s ease;
+    }
+
+    .mini-terminal {
+      margin-top: 22px;
+      border-radius: 22px;
+      background: #050914;
+      border: 1px solid rgba(255,255,255,0.12);
+      overflow: hidden;
+    }
+
+    .terminal-top {
+      display: flex;
+      gap: 8px;
+      padding: 13px 16px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ff5f57;
+    }
+
+    .terminal-dot:nth-child(2) { background: #ffbd2e; }
+    .terminal-dot:nth-child(3) { background: #28c840; }
+
+    .terminal-body {
+      padding: 18px;
+      color: #b7ffd9;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 0.93rem;
+      min-height: 116px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .typing-cursor {
+      display: inline-block;
+      width: 8px;
+      height: 1em;
+      background: #b7ffd9;
+      vertical-align: -2px;
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .compare-card {
+      padding: 30px;
+      border-radius: 32px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.075);
+      transition: transform 0.3s ease;
+    }
+
+    .compare-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .compare-card.bad {
+      background: linear-gradient(145deg, rgba(255,77,109,0.13), rgba(255,255,255,0.06));
+    }
+
+    .compare-card.good {
+      background: linear-gradient(145deg, rgba(53,211,153,0.13), rgba(255,255,255,0.06));
+    }
+
+    .compare-card h3 {
+      font-size: 1.7rem;
+      margin-bottom: 14px;
+      letter-spacing: -0.04em;
+    }
+
+    .compare-card ul {
+      list-style: none;
+      display: grid;
+      gap: 13px;
+      color: var(--muted);
+    }
+
+    .compare-card li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .final-banner {
+      text-align: center;
+      padding: 70px 28px;
+      border-radius: 44px;
+      background:
+        linear-gradient(135deg, rgba(77,163,255,0.24), rgba(139,92,246,0.22)),
+        rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .final-banner::before {
+      content: "";
+      position: absolute;
+      inset: -50%;
+      background: conic-gradient(transparent, rgba(255,255,255,0.22), transparent 20%);
+      animation: rotate 7s linear infinite;
+      opacity: 0.35;
+    }
+
+    @keyframes rotate {
+      to { transform: rotate(360deg); }
+    }
+
+    .final-banner > * {
+      position: relative;
+    }
+
+    .final-banner h2 {
+      margin-bottom: 18px;
+    }
+
+    .final-banner p {
+      color: #dbe7ff;
+      max-width: 760px;
+      margin: 0 auto 30px;
+      font-size: 1.12rem;
+    }
+
+    footer {
+      padding: 32px 18px 55px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    footer p {
+      opacity: 0.8;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(34px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Selezione testo */
+    ::selection {
+      background: rgba(77, 163, 255, 0.3);
+      color: #fff;
+    }
+
+    /* Scrollbar personalizzata */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(77, 163, 255, 0.3);
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(77, 163, 255, 0.5);
+    }
+
+    @media (max-width: 930px) {
+      .hero,
+      .showcase,
+      .grid-2,
+      .grid-3,
+      .compare {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 120px;
+      }
+
+      .hero-visual {
+        min-height: 470px;
+      }
+
+      .showcase {
+        padding: 28px;
+      }
+
+      .card-a { right: 8px; }
+      .card-b { left: 8px; }
+    }
+
+    @media (max-width: 760px) {
+      .nav {
+        border-radius: 24px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+
+      .menu-btn {
+        display: inline-flex;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 0;
+        right: 0;
+        display: none;
+        flex-direction: column;
+        padding: 10px;
+        background: rgba(10, 15, 30, 0.92);
+        border: 1px solid rgba(255,255,255,0.14);
+        border-radius: 22px;
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        display: block;
+        padding: 13px 14px;
+      }
+
+      .section {
+        padding: 82px 0;
+      }
+
+      .smart-home {
+        width: min(360px, 92vw);
+        border-radius: 34px;
+      }
+
+      .roof {
+        width: 150px;
+        height: 150px;
+        top: 64px;
+      }
+
+      .body-house {
+        width: 200px;
+        height: 168px;
+        top: 160px;
+      }
+
+      .door {
+        width: 58px;
+        height: 95px;
+      }
+
+      .dot-1 { top: 110px; left: 98px; }
+      .dot-2 { top: 225px; left: 68px; }
+      .dot-3 { top: 215px; right: 72px; }
+
+      .floating-card {
+        display: none;
+      }
+
+      .camera {
+        width: 220px;
+        height: 310px;
+        border-radius: 48px;
+      }
+
+      .camera::before {
+        width: 122px;
+        height: 122px;
+      }
+
+      .step {
+        grid-template-columns: 1fr;
+      }
+
+      .step:hover {
+        transform: translateY(-4px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="noise" aria-hidden="true"></div>
+
+  <nav class="nav" aria-label="Navigazione principale">
+    <div class="logo">
+      <div class="logo-icon" aria-hidden="true">⌂</div>
+      <span>SecureHome</span>
+    </div>
+
+    <button class="menu-btn" id="menuBtn" aria-label="Apri menu" aria-expanded="false">☰</button>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#domotica">Domotica</a></li>
+      <li><a href="#rischi">Rischi</a></li>
+      <li><a href="#protezione">Protezione</a></li>
+      <li><a href="#demo">Demo</a></li>
+      <li><a href="#conclusione">Conclusione</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero" id="home">
+    <div class="hero-content reveal">
+      <div class="badge"><span class="pulse"></span> Progetto esame · Operatore Informatico</div>
+      <h1><span class="gradient-text">Cyber Security</span><br>nella Smart Home</h1>
+      <p>
+        Telecamere, assistenti vocali, sensori e Wi‑Fi rendono la casa più intelligente.
+        Ma ogni dispositivo connesso deve essere protetto, perché la sicurezza digitale
+        difende anche la nostra privacy.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#domotica">Scopri il progetto →</a>
+        <a class="btn btn-secondary" href="#demo">Prova la demo password</a>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal" aria-label="Illustrazione casa intelligente protetta">
+      <div class="smart-home" id="smartHome">
+        <div class="scan-line"></div>
+        <div class="roof"></div>
+        <div class="body-house">
+          <div class="door"></div>
+        </div>
+        <span class="device-dot dot-1" title="Sensore smart"></span>
+        <span class="device-dot dot-2" title="Telecamera smart"></span>
+        <span class="device-dot dot-3" title="Assistente vocale"></span>
+      </div>
+
+      <div class="floating-card card-a">
+        <strong>Firewall attivo</strong>
+        <span>Traffico controllato</span>
+      </div>
+      <div class="floating-card card-b">
+        <strong>2FA abilitata</strong>
+        <span>Accesso più sicuro</span>
+      </div>
+      <div class="floating-card card-c">
+        <strong>Privacy protetta</strong>
+        <span>Dati personali al sicuro</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="domotica">
+      <div class="section-title reveal">
+        <div class="eyebrow">01 · Casa intelligente</div>
+        <h2>Cos'è la domotica?</h2>
+        <p>
+          La domotica collega oggetti e impianti della casa a Internet. Questa rete di dispositivi
+          si chiama spesso IoT, cioè Internet of Things: Internet delle cose.
+        </p>
+      </div>
+
+      <div class="grid grid-3">
+        <article class="glass-card reveal">
+          <div class="icon">📹</div>
+          <h3>Telecamere smart</h3>
+          <p>Permettono di controllare la casa da remoto, ma devono avere password sicure e aggiornamenti costanti.</p>
+        </article>
+
+        <article class="glass-card reveal">
+          <div class="icon">🗣️</div>
+          <h3>Assistenti vocali</h3>
+          <p>Gestiscono luci, musica e dispositivi. Sono comodi, ma raccolgono dati e vanno configurati bene.</p>
+        </article>
+
+        <article class="glass-card reveal">
+          <div class="icon">🌡️</div>
+          <h3>Sensori e termostati</h3>
+          <p>Automatizzano la casa e migliorano il comfort, ma se vulnerabili possono diventare un punto d'ingresso.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="rischi">
+      <div class="showcase reveal">
+        <div>
+          <div class="eyebrow">02 · Minacce digitali</div>
+          <h3>Una casa connessa può essere attaccata.</h3>
+          <p>
+            Se un dispositivo non è protetto, un attaccante può tentare di accedere alla rete,
+            osservare immagini private, rubare dati o prendere il controllo di alcuni sistemi.
+          </p>
+
+          <div class="risk-list">
+            <div class="risk-item"><span>!</span><span>Accesso non autorizzato alle telecamere</span></div>
+            <div class="risk-item"><span>!</span><span>Furto di password e informazioni personali</span></div>
+            <div class="risk-item"><span>!</span><span>Dispositivi IoT usati come punto debole della rete</span></div>
+          </div>
+        </div>
+
+        <div class="device-panel">
+          <div class="camera" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="protezione">
+      <div class="section-title reveal">
+        <div class="eyebrow">03 · Difesa</div>
+        <h2>Come si protegge una smart home?</h2>
+        <p>
+          La sicurezza non dipende da una sola azione, ma da un insieme di buone pratiche.
+          Anche una scelta semplice, come cambiare la password predefinita, può fare la differenza.
+        </p>
+      </div>
+
+      <div class="steps">
+        <article class="step reveal">
+          <div>
+            <h3>Password forti e diverse</h3>
+            <p>Non usare "admin", "123456" o la stessa password per tutti gli account. Meglio una frase lunga con numeri e simboli.</p>
+          </div>
+        </article>
+
+        <article class="step reveal">
+          <div>
+            <h3>Aggiornamenti software</h3>
+            <p>Gli aggiornamenti correggono vulnerabilità. Un dispositivo non aggiornato può diventare più facile da attaccare.</p>
+          </div>
+        </article>
+
+        <article class="step reveal">
+          <div>
+            <h3>Wi‑Fi protetto</h3>
+            <p>La rete deve usare una password robusta e una cifratura moderna. Per gli ospiti è meglio creare una rete separata.</p>
+          </div>
+        </article>
+
+        <article class="step reveal">
+          <div>
+            <h3>Autenticazione a due fattori</h3>
+            <p>La 2FA aggiunge un secondo controllo oltre alla password, per esempio un codice sul telefono.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="demo">
+      <div class="section-title reveal">
+        <div class="eyebrow">04 · Interazione</div>
+        <h2>Demo: quanto è sicura una password?</h2>
+        <p>
+          Questa piccola demo mostra in modo semplice che una password lunga e varia è più sicura
+          di una password corta e prevedibile.
+        </p>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="password-demo reveal">
+          <label for="passwordInput">Inserisci una password di prova</label>
+          <input id="passwordInput" type="text" autocomplete="off" placeholder="Esempio: CasaSmart!2026">
+          <div class="meter" aria-hidden="true">
+            <div class="meter-fill" id="meterFill"></div>
+          </div>
+          <p class="password-result" id="passwordResult">Scrivi una password per vedere il livello di sicurezza.</p>
+
+          <div class="mini-terminal" aria-label="Terminale simulato">
+            <div class="terminal-top">
+              <span class="terminal-dot"></span>
+              <span class="terminal-dot"></span>
+              <span class="terminal-dot"></span>
+            </div>
+            <div class="terminal-body">
+              <span id="terminalText"></span><span class="typing-cursor"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="compare reveal">
+          <article class="compare-card bad">
+            <h3>Casa vulnerabile</h3>
+            <ul>
+              <li>❌ Password predefinita</li>
+              <li>❌ Nessun aggiornamento</li>
+              <li>❌ Wi‑Fi condiviso con tutti</li>
+              <li>❌ Telecamere senza 2FA</li>
+            </ul>
+          </article>
+
+          <article class="compare-card good">
+            <h3>Casa protetta</h3>
+            <ul>
+              <li>✅ Password robuste</li>
+              <li>✅ Aggiornamenti regolari</li>
+              <li>✅ Rete ospiti separata</li>
+              <li>✅ Accesso con doppia verifica</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="conclusione">
+      <div class="final-banner reveal">
+        <div class="eyebrow">Conclusione</div>
+        <h2>Una casa intelligente deve essere anche sicura.</h2>
+        <p>
+          La domotica migliora la vita quotidiana, ma ogni dispositivo connesso deve essere protetto.
+          La cyber security non è solo tecnologia: è attenzione, prevenzione e rispetto della privacy.
+        </p>
+        <a class="btn btn-primary" href="#home">Torna all'inizio ↑</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Progetto scolastico · Operatore Informatico · Cyber Security nella Domotica</p>
+  </footer>
+
+  <script>
+    "use strict";
+
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+    const passwordInput = document.getElementById("passwordInput");
+    const meterFill = document.getElementById("meterFill");
+    const passwordResult = document.getElementById("passwordResult");
+    const terminalText = document.getElementById("terminalText");
+    const cards = document.querySelectorAll(".glass-card");
+    const revealElements = document.querySelectorAll(".reveal");
+    const sections = document.querySelectorAll("main section, header.hero");
+    const navAnchors = document.querySelectorAll(".nav-links a");
+
+    // Menu mobile
+    if (menuBtn && navLinks) {
+      menuBtn.addEventListener("click", () => {
+        const isOpen = navLinks.classList.toggle("open");
+        menuBtn.setAttribute("aria-expanded", isOpen);
+        menuBtn.textContent = isOpen ? "✕" : "☰";
+      });
+
+      navAnchors.forEach((link) => {
+        link.addEventListener("click", () => {
+          navLinks.classList.remove("open");
+          menuBtn.setAttribute("aria-expanded", "false");
+          menuBtn.textContent = "☰";
+        });
+      });
+    }
+
+    // Effetto luce sulle card
+    cards.forEach((card) => {
+      card.addEventListener("mousemove", (event) => {
+        const rect = card.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        card.style.setProperty("--x", `${x}px`);
+        card.style.setProperty("--y", `${y}px`);
+      });
+    });
+
+    // Animazioni scroll reveal
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      { threshold: 0.14 }
+    );
+
+    revealElements.forEach((element) => revealObserver.observe(element));
+
+    // Navigazione attiva
+    const navObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          const id = entry.target.id;
+          navAnchors.forEach((link) => {
+            const target = link.getAttribute("href");
+            link.classList.toggle("active", target === `#${id}`);
+          });
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    sections.forEach((section) => navObserver.observe(section));
+
+    // Valutazione password
+    function evaluatePassword(value) {
+      let score = 0;
+
+      if (value.length >= 8) score += 20;
+      if (value.length >= 12) score += 20;
+      if (/[A-Z]/.test(value)) score += 15;
+      if (/[a-z]/.test(value)) score += 15;
+      if (/[0-9]/.test(value)) score += 15;
+      if (/[^A-Za-z0-9]/.test(value)) score += 15;
+
+      return Math.min(score, 100);
+    }
+
+    function updatePasswordDemo() {
+      const value = passwordInput.value;
+      const score = evaluatePassword(value);
+
+      meterFill.style.width = `${score}%`;
+
+      if (score < 35) {
+        meterFill.style.background = "#ff4d6d";
+        passwordResult.textContent = "Password debole: troppo corta o prevedibile.";
+        passwordResult.style.color = "#ff8fa3";
+      } else if (score < 70) {
+        meterFill.style.background = "#ffbd2e";
+        passwordResult.textContent = "Password media: buona base, ma può essere migliorata.";
+        passwordResult.style.color = "#ffe066";
+      } else {
+        meterFill.style.background = "#35d399";
+        passwordResult.textContent = "Password forte: lunga, varia e più difficile da indovinare.";
+        passwordResult.style.color = "#6ee7b7";
+      }
+
+      if (value.length === 0) {
+        meterFill.style.width = "0%";
+        meterFill.style.background = "#ff4d6d";
+        passwordResult.textContent = "Scrivi una password per vedere il livello di sicurezza.";
+        passwordResult.style.color = "var(--muted)";
+      }
+    }
+
+    if (passwordInput && meterFill && passwordResult) {
+      passwordInput.addEventListener("input", updatePasswordDemo);
+    }
+
+    // Terminale animato
+    const terminalLines = [
+      "> scansione rete smart home...",
+      "> controllo telecamera ingresso: protetta",
+      "> controllo Wi-Fi: cifratura attiva",
+      "> controllo password: usa sempre credenziali forti",
+      "> risultato: sicurezza migliorata ✓"
+    ];
+
+    let lineIndex = 0;
+    let charIndex = 0;
+    let output = "";
+
+    function typeTerminal() {
+      if (!terminalText) return;
+
+      if (lineIndex < terminalLines.length) {
+        const currentLine = terminalLines[lineIndex];
+
+        if (charIndex < currentLine.length) {
+          output += currentLine.charAt(charIndex);
+          terminalText.textContent = output;
+          charIndex += 1;
+          window.setTimeout(typeTerminal, 28);
+        } else {
+          output += "\n";
+          terminalText.textContent = output;
+          lineIndex += 1;
+          charIndex = 0;
+          window.setTimeout(typeTerminal, 380);
+        }
+      }
+    }
+
+    // Avvia il terminale quando la sezione demo è visibile
+    const demoSection = document.getElementById("demo");
+    let terminalStarted = false;
+
+    if (demoSection) {
+      const terminalObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !terminalStarted) {
+              terminalStarted = true;
+              typeTerminal();
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+      terminalObserver.observe(demoSection);
+    }
+
+    // Effetto 3D sulla casa smart
+    const smartHome = document.getElementById("smartHome");
+
+    if (smartHome) {
+      let animationFrame;
+      
+      window.addEventListener("mousemove", (event) => {
+        if (animationFrame) cancelAnimationFrame(animationFrame);
+        
+        animationFrame = requestAnimationFrame(() => {
+          const x = (event.clientX / window.innerWidth - 0.5) * 8;
+          const y = (event.clientY / window.innerHeight - 0.5) * -8;
+          smartHome.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+        });
+      });
+
+      window.addEventListener("mouseleave", () => {
+        smartHome.style.transform = "rotateY(0deg) rotateX(0deg)";
+      });
+    }
+  </script>
+</body>
+</html>
